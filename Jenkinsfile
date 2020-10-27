@@ -8,7 +8,7 @@ node{
             sh "${mvnCMD} clean install"
         }
         stage('Build Docker Image'){
-            sh “docker build -t arsobhan/movie-service .”
+            sh "docker build -t arsobhan/movie-service ."
         }
 		
 }
