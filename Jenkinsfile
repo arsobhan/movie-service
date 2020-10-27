@@ -15,5 +15,12 @@ node{
 			sh "docker push arsobhan/movie-service"
 		}
         }
+	stage('Deploy Application in K8s Cluster'){
+		kubernetesDeploy(
+			configs : 'movie-service.yaml',
+			kubeconfigId : 'kubeConfig',
+			enableConfigSubstitution : true
+		)
+	}
 		
 }
