@@ -1,12 +1,14 @@
-node {
-
-    checkout scm
-
-    docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
-
-        def customImage = docker.build("arsobhan/movie-service")
-
-        /* Push the container to the custom Registry */
-        customImage.push()
-    }
+node{
+        stage('Git Clone'){
+            git credentialsId: 'gitHub', url: 'https://github.com/arsobhan/movie-service'
+        }
+        stage('Mvn Packaging'){
+            def mvnHome = tool name: 'Maven', type: 'maven'
+            def mvnCMD = "${mvnHome}/bin/mvn"
+            sh "${mvnCMD} clean install"
+        }
+        stage('Build Docker Image'){
+            sh “docker build -t arsobhan/movie-service .”
+        }
+		
 }
