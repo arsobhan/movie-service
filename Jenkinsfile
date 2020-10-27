@@ -11,10 +11,9 @@ node{
             sh "docker build -t arsobhan/movie-service ."
         }
 	stage('Push Docker Image'){
-		WithCredentials([string(credentialsId:'dockerHub',variable:'dockerHub')]){
-			sh "docker login -u arsobhan -p ${dockerHub}"
+		docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
+			sh "docker push arsobhan/movie-service"
 		}
-		sh "docker push arsobhan/movie-service"
         }
 		
 }
